@@ -9,12 +9,11 @@ module.exports = {
     try {
       const users = await User.find();
 
-      const userObj = {
-        users,
-        headCount: await headCount(),
-      };
+      // const userObj = {
+      //   users,
+      // };
 
-      res.json(userObj);
+      res.json(users);
     } catch (err) {
       console.log(err);
       return res.status(500).json(err);
@@ -30,10 +29,7 @@ module.exports = {
         return res.status(404).json({ message: 'No user with that ID' })
       }
 
-      res.json({
-        user,
-        grade: await grade(req.params.userId),
-      });
+      res.json({user});
     } catch (err) {
       console.log(err);
       return res.status(500).json(err);
@@ -57,15 +53,15 @@ module.exports = {
         return res.status(404).json({ message: 'No such user exists' });
       }
 
-      const course = await Course.findOneAndUpdate(
+      const thought = await Thought.findOneAndUpdate(
         { users: req.params.userId },
         { $pull: { users: req.params.userId } },
         { new: true }
       );
 
-      if (!course) {
+      if (!thought) {
         return res.status(404).json({
-          message: 'User deleted, but no courses found',
+          message: 'User deleted',
         });
       }
 
