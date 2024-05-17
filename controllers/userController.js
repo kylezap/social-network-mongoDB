@@ -146,7 +146,7 @@ module.exports = {
 async addFriend(req, res) {
   try {
       const newfriend = req.body; // Get the friend's user ID from the request parameters
-      const friend = req.params.userId
+      const friend = req.params.userId;
       console.log(friend);
       const user = await User.findOneAndUpdate(
           { _id: friend },
@@ -162,8 +162,35 @@ async addFriend(req, res) {
   } catch (err) {
       res.status(500).json(err);
   }
-}
-}
+},
+
 //remove a friend
+
+async removeFriend(req, res) {
+  try {
+    const friendId = req.params.friendId; // Get the friend's user ID from the request parameters
+      const userId = req.params.userId
+      
+    const user = await User.findOneAndUpdate(
+      { _id: userId },
+      { $pull: { friends: friendId } },
+      {  new: true }
+    );
+
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: 'No user found with that ID :(' });
+    }
+
+    res.json(user);
+  } catch (err) {
+    console.log(err);
+    res.status(500).json(err);
+  }
+},
+
+
+}
 
 

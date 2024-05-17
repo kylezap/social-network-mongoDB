@@ -8,6 +8,7 @@ const {
   addReaction,
   removeReaction,
   addFriend,
+  removeFriend
 
 } = require('../../controllers/userController');
 
@@ -25,7 +26,7 @@ router.route('/:userId/reactions/:reactionId').delete(removeReaction);
 
 router.route('/:userId/friends/').put(addFriend);
 
-// router.route('/:userId/friends/:friendId').delete(removeFriend)
+router.route('/:userId/friends/:friendId').delete(removeFriend)
 
 
 
