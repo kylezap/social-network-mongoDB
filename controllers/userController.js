@@ -121,7 +121,7 @@ module.exports = {
   // Remove reaction from a user
   async removeReaction(req, res) {
     try {
-      const user = await User.findOneAndDelete(
+      const user = await User.findOneAndUpdate(
         { _id: req.params.userId },
         { $pull: { reaction: { reactionId: req.params.reactionId } } },
         { runValidators: true, new: true }
